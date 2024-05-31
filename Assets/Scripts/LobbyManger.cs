@@ -14,6 +14,8 @@ public class LobbyManger : MonoBehaviourPunCallbacks
     [SerializeField] private Transform listContent;
     [SerializeField] private GameObject roomPanel;
 
+    private bool isRefresh;
+
     public void CreateRoomButton()
     {
         RoomOptions roomOptions = new RoomOptions();
@@ -29,6 +31,13 @@ public class LobbyManger : MonoBehaviourPunCallbacks
 
     public void ExitLobbyButton()
     {
+        PhotonNetwork.LeaveLobby();
+    }
+
+    public void RefreshButton()
+    {
+        isRefresh = true;
+
         PhotonNetwork.LeaveLobby();
     }
 
@@ -78,7 +87,20 @@ public class LobbyManger : MonoBehaviourPunCallbacks
     public override void OnLeftLobby()
     {
         Debug.Log("로비 퇴장 성공");
-        PhotonNetwork.LoadLevel("Launcher");
+
+        if (isRefresh)
+        {
+            PhotonNetwork.JoinLobby(TypedLobby.Default);
+        }
+        else
+        {
+            PhotonNetwork.LoadLevel("Launcher");
+        }
+    }
+
+    public override void OnJoinedLobby()
+    {
+        isRefresh = false;
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)

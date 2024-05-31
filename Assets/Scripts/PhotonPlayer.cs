@@ -61,18 +61,17 @@ public class PhotonPlayer : MonoBehaviourPun
 
 		if (v > 0.1)
 		{
-			v *= forwardSpeed;       
+			v *= forwardSpeed;
 		}
 		else if (v < -0.1)
 		{
-			v *= backwardSpeed;  
+			v *= backwardSpeed;
 		}
 
 		cameraForward = cameraObject.transform.forward;
 		transform.localPosition += new Vector3(cameraForward.x, 0, cameraForward.z).normalized * v * Time.deltaTime;
 
 		cameraEuler = cameraObject.transform.rotation.eulerAngles;
-
 		Vector3 characterEuler = transform.rotation.eulerAngles;
 		characterEuler.y = cameraEuler.y;
 		transform.rotation = Quaternion.Euler(characterEuler);

@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class Ball : MonoBehaviour
+public class Ball : MonoBehaviourPun
 {
     private Rigidbody myRigidbody;
 
@@ -29,6 +30,8 @@ public class Ball : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (!photonView.IsMine) return;
+
         if (collision.gameObject.CompareTag("Player"))
         {
             myRigidbody.AddForce((transform.position - collision.transform.position) * 0.5f, ForceMode.Impulse);
@@ -37,6 +40,8 @@ public class Ball : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!photonView.IsMine) return;
+
         switch (other.name)
         {
             case "Goal Net Red":

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour, IPunObservable
+public class GameManager : MonoBehaviourPun, IPunObservable
 {
     public static GameManager instance;
 
